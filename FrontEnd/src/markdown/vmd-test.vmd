@@ -1,0 +1,29 @@
+<template>
+  <!-- Test-Komponente für gemischten Vue + Markdown Content -->
+  <!-- Siehe https://quasarframework.github.io/quasar-ui-qmarkdown/docs#importing-vue%2Bmarkdown-(.vmd) -->
+  <div class="q-pa-md q-gutter-sm q-markdown"> <!-- ACHTUNG: Hier q-markdown in class="..." als Kennzeichner erforderlich! -->
+  <!-- Hier beginnt Markdown -->
+  
+  ---
+  ## 12.3 Vue + Markdown (VMD, Test)
+
+  <!-- Markdown: -->
+  **QMarkdown** is a [Quasar App Extension](https://v1.quasar.dev/app-extensions/introduction).
+  In its basic use case, it provides the ability for a web app to display content in **Markdown** format.
+  This section is a sample for the advanced use of ==**mixed Vue + Markdown**== content, which enables Markdown content to be mixed with Vue and Quasar components.
+  This allows us to use e.g. the **QImg** Quasar component from within Markdown, which allows to link to local images in the local, protected assets folder using a special src="~assets/my-img.gif" notation.
+  Alternatively, it can load remote images through URLs, like src="https://bimclickserver.herokuapp.com/img/estrich.jpg"
+  Differently from plain HTML img tags, it supplies an authorization header (to be set up through Axios in the code using it, e.g. in mounted() of dokumenation.vue)
+  to get authorization to protected assets on the remote server (like bimclickserver.herokuapp.com)
+  It has additional support for other authorization related props, like crossorigin and referrerpolicy.
+  See the q-img API docs on https://quasar.dev/vue-components/img#api--qimg.
+
+  <!-- Test für Quasar Components im Vue+Markdown Content - funktioniert! -->
+  Quasar QImg Component Test within Markdown:
+  <q-img
+    width="10%"
+    src="https://dummyimage.com/100"
+  />
+
+  </div> <!-- ACHTUNG: Fehlte in der Vorlage! -->
+</template>

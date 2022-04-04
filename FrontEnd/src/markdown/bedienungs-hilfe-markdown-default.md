@@ -1,0 +1,2 @@
+::: danger Bedienungshilfe Default-Text
+:::
