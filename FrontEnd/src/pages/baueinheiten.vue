@@ -1,4 +1,4 @@
-h<!-- baueinheiten.vue - Vue/Quasar-Komponente zur Bauvorhaben-/Baueinheitenverwaltung -->
+<!-- baueinheiten.vue - Vue/Quasar-Komponente zur Bauvorhaben-/Baueinheitenverwaltung -->
 <!--***=======================================================================================================================================================================-->
 <!-- HINWEIS: BIM.click ToDos/Backlog ist jetzt in bim-click-front-end\src\markdown\bim-click-backlog.md -->
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
@@ -9042,6 +9042,7 @@ h<!-- baueinheiten.vue - Vue/Quasar-Komponente zur Bauvorhaben-/Baueinheitenverw
                       name="geschossProfilFormularTabBaueinheiten"
                       class="q-pa-xs full-width"
                     >
+                    <computedWithSideEffect/>
                     VUE 3
                     <!--
                       <baueinheitGeschossBaueigenschaftsProfilFormular
@@ -13002,6 +13003,7 @@ import BaueinheitGebaeudeBaueigenschaftsProfilFormular from "../components/bauei
 // import BaueinheitBodenaufbauBaueigenschaftsProfilFormular from "../components/baueinheit-bodenaufbau-baueigenschafts-profil-formular.vue"; // ALT
 import BaueinheitSchichtBaueigenschaftsProfilFormular from "../components/baueinheit-schicht-baueigenschafts-profil-formular"; // NEU: Spezifisches Baueigenschaftsprofilformular für Schicht
 import BaueinheitBodenaufbauBaueigenschaftsProfilFormular from "../components/baueinheit-bodenaufbau-baueigenschafts-profil-formular"; // NEU
+import ComputedWithSideEffect from "../components/ComputedWithSideEffect.vue"
 // import entwurfSchichtaufbau from "../components/entwurf-schichtaufbau"; // Terminologie?!? ALT: Wird nicht mehr verwendet
 // import BaueigenschaftBearbeitung from "../components/baustoffe-baueigenschaft-bearbeitung"; // ALT: Wird nicht mehr verwendet
 // import BaueinheitenigenschaftNeuanlage from "../components/baustoffe-baueigenschaft-neuanlage"; // Wird nicht verwendet
@@ -13052,6 +13054,7 @@ const hierarchieAllerBaueigenschaftsProfile = [
 export default {
   //***================================================================================================================================
   components: {
+    computedWithSideEffect: ComputedWithSideEffect,
     // Verwendete Vue-Komponenten:
     // NEU: Kindkomponenten disabled!
     baueigenschaftsProfileTabBaustoffeUndBaueinheiten: BaueigenschaftsProfileTabBaustoffeUndBaueinheiten,
