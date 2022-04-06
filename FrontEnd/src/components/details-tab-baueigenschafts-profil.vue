@@ -377,7 +377,7 @@
             </div>
             <q-table
               color="primary"
-              :data="tableDataZugeordneteBaueigenschaften"
+              :rows="tableDataZugeordneteBaueigenschaften"
               :columns="columnsAlleBaueigenschaften"
               :visible-columns="visibleColumnsTableBaueigenschaften"
               :row-key="row => row.typbezogeneBaueigenschaft._id"
