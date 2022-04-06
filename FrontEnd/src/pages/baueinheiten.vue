@@ -2442,7 +2442,7 @@
                         :filter="filterTableBaueigenschaften"
                         :visible-columns="visibleColumnsTableBaueigenschaften"
                         rows-per-page-label="Einträge pro Seite"
-                        :pagination.sync="paginationTableBaueigenschaften"
+                        v-model.pagination="paginationTableBaueigenschaften"
                         :pagination-label="getPaginationLabel"
                         :rows-per-page-options="[
                           5,
@@ -2456,7 +2456,7 @@
                           0
                         ]"
                         :selection="selectionModeTableBaueigenschaften"
-                        :selected.sync="selectedRowsTableBaueigenschaften"
+                        v-model:selected="selectedRowsTableBaueigenschaften"
                         :selected-rows-label="
                           getSelectedStringTableBaueigenschaften
                         "
@@ -9042,9 +9042,10 @@
                       name="geschossProfilFormularTabBaueinheiten"
                       class="q-pa-xs full-width"
                     >
+                    <!--
                     <computedWithSideEffect/>
                     VUE 3
-                    <!--
+                    -->
                       <baueinheitGeschossBaueigenschaftsProfilFormular
                         profilBezeichnung="Baueinheit > Geschoss"
                         :nodes="nodesTreeBaueinheiten"
@@ -9056,7 +9057,6 @@
                           reloadTreeWrapper()
                         "
                       />
-                      -->
                     </q-tab-panel>
                     <!-- --------------------------------------------------------------------------------------------------------------------------------- -->
                     <!-- NEU: -->
@@ -9143,7 +9143,7 @@
                           tabBaueigenschaftsProfilFormulare =
                             'schichtProfilFormularTabBaueinheiten';
                         "
-                        :idCurrentlySelectedSchicht.sync="
+                        v-model:idCurrentlySelectedSchicht="
                           localStore.state.selectionInBodenaufbau
                         "
                         @create-schicht-request="handleCreateSchicht($event)"
@@ -9633,9 +9633,9 @@
                             :nodes="nodesTreeBaustoffe"
                             node-key="_id"
                             label-key="baustoffBezeichnung"
-                            :selected.sync="selectedKeyTreeBaustoffe"
-                            :expanded.sync="expandedKeysTreeBaustoffe"
-                            :ticked.sync="tickedKeysTreeBaustoffe"
+                            v-model:selected="selectedKeyTreeBaustoffe"
+                            v-model:expanded="expandedKeysTreeBaustoffe"
+                            v-model:ticked="tickedKeysTreeBaustoffe"
                             selected-color="white bg-primary shadow-2"
                             :filter="filterTreeBaustoffe"
                             no-nodes-label="Keine Baustoffe vorhanden"
@@ -10375,7 +10375,7 @@
                       "
                       :columns="columnsTableBauinformationen"
                       :visible-columns="visibleColumnsTableBauinformationen"
-                      :pagination.sync="paginationTableBauinformationen"
+                      v-model:pagination="paginationTableBauinformationen"
                       :pagination-label="getPaginationLabel"
                       :rows-per-page-options="[
                         5,
@@ -10389,7 +10389,7 @@
                         0
                       ]"
                       selection="single"
-                      :selected.sync="selectedRowsTableBauinformationen"
+                      v-model:selected="selectedRowsTableBauinformationen"
                       :selected-rows-label="
                         getSelectedStringTableBauinformationen
                       "
@@ -12998,7 +12998,8 @@ import LayoutGesteuertesGenerischesBaueigenschaftsProfilFormular from "../compon
 import BaueinheitBauvorhabenBaueigenschaftsProfilFormular from "../components/baueinheit-bauvorhaben-baueigenschafts-profil-formular.vue"; // NEU: Spezifisches Baueigenschaftsprofilformular für Bauvorhaben
 import BaueinheitStandortBaueigenschaftsProfilFormular from "../components/baueinheit-standort-baueigenschafts-profil-formular"; // NEU: Spezifisches Baueigenschaftsprofilformular für Standort
 import BaueinheitGebaeudeBaueigenschaftsProfilFormular from "../components/baueinheit-gebaeude-baueigenschafts-profil-formular"; // NEU: Spezifisches Baueigenschaftsprofilformular für Gebäude
-// VUE 3 import BaueinheitGeschossBaueigenschaftsProfilFormular from "../components/baueinheit-geschoss-baueigenschafts-profil-formular"; // NEU: Spezifisches Baueigenschaftsprofilformular für Geschoss
+// VUE 3 
+import BaueinheitGeschossBaueigenschaftsProfilFormular from "../components/baueinheit-geschoss-baueigenschafts-profil-formular"; // NEU: Spezifisches Baueigenschaftsprofilformular für Geschoss
 // VUE 3 import BaueinheitRaumBaueigenschaftsProfilFormular from "../components/baueinheit-raum-baueigenschafts-profil-formular"; // NEU: Spezifisches Baueigenschaftsprofilformular für Raum
 // import BaueinheitBodenaufbauBaueigenschaftsProfilFormular from "../components/baueinheit-bodenaufbau-baueigenschafts-profil-formular.vue"; // ALT
 import BaueinheitSchichtBaueigenschaftsProfilFormular from "../components/baueinheit-schicht-baueigenschafts-profil-formular"; // NEU: Spezifisches Baueigenschaftsprofilformular für Schicht
@@ -13067,7 +13068,8 @@ export default {
     baueinheitBauvorhabenBaueigenschaftsProfilFormular: BaueinheitBauvorhabenBaueigenschaftsProfilFormular, // NEU: Spezifisches Baueigenschaftsprofilformular für Bauvorhaben
     baueinheitStandortBaueigenschaftsProfilFormular: BaueinheitStandortBaueigenschaftsProfilFormular, // NEU: Spezifisches Baueigenschaftsprofilformular für Standort
     baueinheitGebaeudeBaueigenschaftsProfilFormular: BaueinheitGebaeudeBaueigenschaftsProfilFormular, // NEU: Spezifisches Baueigenschaftsprofilformular für Gebäude
-    // VUE 3 baueinheitGeschossBaueigenschaftsProfilFormular: BaueinheitGeschossBaueigenschaftsProfilFormular, // NEU: Spezifisches Baueigenschaftsprofilformular für Geschoss
+    // VUE 3 
+    baueinheitGeschossBaueigenschaftsProfilFormular: BaueinheitGeschossBaueigenschaftsProfilFormular, // NEU: Spezifisches Baueigenschaftsprofilformular für Geschoss
     // baueinheitRaumBaueigenschaftsProfilFormular: BaueinheitRaumBaueigenschaftsProfilFormular, // NEU: Spezifisches Baueigenschaftsprofilformular für Geschoss
     baueinheitBodenaufbauBaueigenschaftsProfilFormular: BaueinheitBodenaufbauBaueigenschaftsProfilFormular, // NEU: Stefans Komponente für den Bodenaufbau
     baueinheitSchichtBaueigenschaftsProfilFormular: BaueinheitSchichtBaueigenschaftsProfilFormular // NEU: Spezifisches Baueigenschaftsprofilformular für Schicht

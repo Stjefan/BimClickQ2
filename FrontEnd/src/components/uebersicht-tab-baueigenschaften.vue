@@ -3,7 +3,7 @@
     <q-table
       color="primary"
       ref="tableBaueigenschaften"
-      :data="dataTableBaueigenschaften"
+      :rows="dataTableBaueigenschaften"
       :columns="columnData"
       row-key="_id"
       :filter="filterTableBaueigenschaften"

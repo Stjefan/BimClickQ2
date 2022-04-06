@@ -25,7 +25,7 @@
     <!-- ACHTUNG: In Vue 3 muss es @update:model-value="myUpdateFunction" heißen -->
     <q-input
       ref="inputRef"
-      :value="formattedValue"
+      :modelValue="formattedValue"
       dense
       square
       bg-color="teal-2"
@@ -65,9 +65,9 @@
     </q-input>
     <br />
     <br />
-    Aktueller Wert im VModel: <code>{{ $props.value }}</code>
+    Aktueller Wert im VModel: <code>{{ $props.modelValue }}</code>
     <br />
-    Typ des VModels: <code>{{ typeof $props.value }}</code>
+    Typ des VModels: <code>{{ typeof $props.modelValue }}</code>
     <br />
     Durch VueCurrencyInput formatierter Wert: <code>{{ formattedValue }}</code>
     <br />
@@ -78,7 +78,7 @@
 </template>
 //***===========================================================================================================================
 <script>
-import { watch } from '@vue/composition-api'; // Für watch() unten NOTWENDIG!
+import { watch } from 'vue' //'@vue/composition-api'; // Für watch() unten NOTWENDIG!
 import { parse, useCurrencyInput } from "vue-currency-input";
 
 //--------------------------------------------------------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ export default {
   // name: 'ComponentName',
   name: "QDecimalInput", // Für BIM.click-Zwecke (Dezimalzahleingabe) gewählter Komponentenname
   props: {
-    value: Number, // Vue 2: value; Vue 3: modelValue
+    modelValue: Number, // Vue 2: value; Vue 3: modelValue
     options: Object
   },
   setup(props) {
@@ -95,15 +95,25 @@ export default {
     // Ist notwendig, wenn das VModel nicht nur durch Benutzereingabe, sondern durch externe Funktionen (z.B. Inkrement/Dekrement) geändert wird!
     // watch() hier ist notwendig für Lösungen 1, 2, 3, 5 und bei initialen Tests auch 6
     //==================================================================================
-    watch(() => props.value, (value) => { // Vue 2: props.value; Vue 3: props.modelValue
+    
+    watch(() => props.modelValue, (value) => { // Vue 2: props.value; Vue 3: props.modelValue
+    console.log("Watch: " + value)
       setValue(value)
     })
     //==================================================================================
     watch(() => props.options, (options) => {
       setOptions(options)
     })
+    
     return { inputRef, formattedValue, setValue };
   },
+  /*
+  watch: {
+    value: function (newVal) {
+      setValue(newVal)
+    }
+  },
+  */
   //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   data() {
     return {};
@@ -114,7 +124,7 @@ export default {
     myUpdateFunction(arg) {
       // Methode für Lösung 6 für VueCurrencyInput
       console.log("In myUpdateFunction(arg) - arg: ", arg);
-      this.$emit("update", arg)
+      this.$emit("update:modelValue", arg)
     },
     //----------------------------------------------------------------------------------------------------------------------------
     // Methoden für Inkrement/Dekrement:
@@ -122,11 +132,11 @@ export default {
       console.log("In myIncrementOrDecrement(incrementNotDecrement)");
       console.log("Parameter incrementNotDecrement: ", incrementNotDecrement);
       // Zugriff auf das VModel per obiger Prop value:
-      // console.log("$props.value: ", this.$props.value);
-      console.log("value: ", this.value) // ACHTUNG: this.value ist äquivalent zu this.$props.value!
+      console.log("$props.value: ", this.$props.modelValue);
+      console.log("value: ", this) // ACHTUNG: this.value ist äquivalent zu this.$props.value!
       console.log(
         "typeof value: ",
-        typeof this.value
+        typeof this.modelValue
       );
       //------------------------------------------------------------------------------------------------------------------------
       // HIER sind keine Typkonvertierungen notwendig, wie mit VueAutoNumeric!!!
@@ -140,11 +150,11 @@ export default {
       // console.log("typeof(number): ", typeof(number))
       // console.log("number aus convertDecimalStringToNumber(): ", number);
       //------------------------------------------------------------------------------------------------------------------------
-      let number = this.value;
+      let number = this.modelValue;
       if (incrementNotDecrement) {
-        number = number + 0.01
+        number = number + 0.1
       } else {
-        number = number - 0.01
+        number = number - 0.1
       }
       number = Math.round(number * 100) / 100; // Präventive Rundungskorrektur, siehe
       // https://stackoverflow.com/questions/38561833/obtain-two-decimal-places-in-javascript-without-rounding-to-the-next-bigger-numb
@@ -201,7 +211,8 @@ export default {
       // Dies funktioniert allerdings auch nur in Verbindung mit obigem watch() - vermutlich reagiert die Komponente selbst
       // auf diesen @input-Event und aktualisiert dann das VModel.
       //----------------------------------------------------------------------------------------------------------------------
-      this.$emit("input", number) // Lösung 5 - dies bewirkt ebenfalls eine Aktualisierung des VModels.
+      // this.$emit("input", number) // Lösung 5 - dies bewirkt ebenfalls eine Aktualisierung des VModels.
+      this.myUpdateFunction(number)
       //======================================================================================================================
       // VERSUCH 6 (STEFAN)
       // Update des Models wird in der aufrufenden Komponente erledigt, mittels Update-Event aus der Kindkomponente hier.

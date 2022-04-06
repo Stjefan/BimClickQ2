@@ -5272,12 +5272,13 @@ import LayoutBaueinheitGeschossBaueigenschaftsProfilFormular from "../modules/la
 import { decimalHandling } from "../modules/decimal-handling"; // NEU: Zentrale Helper-Funktionen zur Konvertierung von Dezimalzahlen von String nach Number
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 // NEU: Für Dezimalzahlen mit VueAutoNumeric (statt VMoney), https://www.npmjs.com/package/vue-autonumeric
-import VueAutonumeric from "vue-autonumeric"; // Erfordert unten Eintrag in components: { ..., VueAutoNumeric }
+// import VueAutonumeric from "vue-autonumeric"; // Erfordert unten Eintrag in components: { ..., VueAutoNumeric }
+import PlaceholderComponent from "../components/PlaceholderComponent.vue"
 //================================================================================================================================================
 export default {
   // name: 'ComponentName',
   components: {
-    VueAutonumeric // NEU - für Tests mit VueAutoNumeric
+    VueAutonumeric: PlaceholderComponent // NEU - für Tests mit VueAutoNumeric
   },
   props: [
     "profilBezeichnung", // Bezeichnung des anzuzeigenden Baueigenschaftsprofils, sollte für dieses Formular "Baueinheit > Geschoss" sein

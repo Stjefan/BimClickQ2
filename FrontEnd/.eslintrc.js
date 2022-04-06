@@ -68,7 +68,7 @@ module.exports = {
     'vue/no-deprecated-filter': 'off',
     'vue/no-deprecated-slot-attribute': 'off',
     'vue/no-deprecated-slot-scope-attribute': 'off',
-    
+    'vue/no-unused-components': 'off',
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   }

@@ -60,8 +60,8 @@
         v-if="$q.screen.gt.sm"
         :src="
           localStore.state.einstellungenBenutzer.farbSchema === 'grau'
-            ? 'statics/logos/kurz-und-fischer-logo-linker-teil-gruen-wie-bim-click-logo.png'
-            : 'statics/logos/kurz-und-fischer-logo-linker-teil.png'
+            ? '../statics/logos/kurz-und-fischer-logo-linker-teil-gruen-wie-bim-click-logo.png'
+            : '../statics/logos/kurz-und-fischer-logo-linker-teil.png'
         "
         style="max-height: 27%; max-width: 27%"
         @click="
@@ -3403,6 +3403,7 @@
     </q-drawer>
     <!-- --------------------------------------------------------------------------------------------------------------------------------- -->
     <q-page-container>
+      <!-- VUE3: KEINE KOMMENTARE IN KEEP-alive Block -->
       <!-- <div id="q-app" class="q-pa-md q-mt-xs q-gutter-md">
         <q-btn color="white" text-color="black"  @click="$router.replace('/')"label="Anzeigen" />
         <q-btn color="primary"  @click="$router.replace('/add')" label="Hinzufügen" />

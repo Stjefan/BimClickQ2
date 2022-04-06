@@ -241,7 +241,7 @@
             <!-- TODO XXXXXX -->
             <q-table
               color="primary"
-              :data="tableDataZugeordneteBauinformationen"
+              :rows="tableDataZugeordneteBauinformationen"
               :columns="columnsAlleBauinformationen"
               :visible-columns="visibleColumnsTableBauinformationen"
               :row-key="row => row._id"

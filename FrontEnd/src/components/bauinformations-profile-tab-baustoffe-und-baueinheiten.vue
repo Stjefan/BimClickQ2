@@ -63,7 +63,7 @@
         <q-table
           color="primary"
           ref="tableBauinformationsProfile"
-          :data="alleBauinformationsProfile"
+          :rows="alleBauinformationsProfile"
           :columns="columnsTableBauinformationsProfile"
           row-key="_id"
           :selected.sync="internalSelectedRowsTableBauinformationsProfile"

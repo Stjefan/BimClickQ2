@@ -3,7 +3,7 @@
     <q-table
       color="primary"
       ref="tableBaueigenschaftsProfile"
-      :data="dataTableBaueigenschaftsProfile"
+      :rows="dataTableBaueigenschaftsProfile"
       :columns="columnsTableBaueigenschaftsProfile"
       row-key="_id"
       :selected.sync="internalSelectedRowsTableBaueigenschaftsProfile"

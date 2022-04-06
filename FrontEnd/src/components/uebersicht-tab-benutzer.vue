@@ -3,7 +3,7 @@
     <q-table
       color="primary"
       ref="tableBenutzer"
-      :data="dataTableBenutzer"
+      :rows="dataTableBenutzer"
       :columns="columnData"
       row-key="_id"
       :filter="filterTableBenutzer"
