@@ -17,6 +17,7 @@
     "axios": "^0.21.1",
     "connect-history-api-fallback": "^1.6.0",
     "core-js": "^3.6.5",
+    "emittery": "^0.10.2",
     "express": "^4.17.3",
     "filestack-js": "^3.25.0",
     "pinia": "^2.0.11",

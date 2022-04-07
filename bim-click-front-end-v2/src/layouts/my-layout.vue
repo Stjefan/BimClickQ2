@@ -4286,7 +4286,7 @@ export default {
     // handleClickInDrawer1_0 war eine solche Methode, die per @click="handleClickInDrawer1_0" am q-item oben aufgerufen wurde:
     /*
     handleClickInDrawer1_0() {
-      this.$root.$emit("scrollToDocTopic", "1"); // ACHTUNG: Unbedingt $root notwendig, da Cross-Component Event (Use Bus)
+      this.$emitter.$emit("scrollToDocTopic", "1"); // ACHTUNG: Unbedingt $emitter notwendig, da Cross-Component Event (Use Bus)
       console.log("In MyLayout. Emitted event scrollToDocTopic.");
       this.$router.replace("/Dokumentation"); // Dokumentations-Komponente rendern, diese bekommt Id von Dokumentationsthema per 2. Event-Parameter oben
     }, // /handleClickInDrawer1_0
@@ -4489,7 +4489,7 @@ export default {
 
   //***--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   created: function() {
-    // Hinweise für Event Handling mit global Event Bus: https://quasar.dev/options/global-event-bus - erklärt this.$root.$on, $once, $off, $emit etc.
+    // Hinweise für Event Handling mit global Event Bus: https://quasar.dev/options/global-event-bus - erklärt this.$emitter.$on, $once, $off, $emit etc.
 
     // ACHTUNG: https://medium.com/@brockreece/vue-parent-and-child-lifecycle-hooks-5d6236bd561f
     // Reihenfolge von mounted: bei Eltern-Kind-Komponenten ist andersherum: Erst wird mounted: des Kinds aufgerufen, dann mounted: des Parents!!!
@@ -4499,6 +4499,7 @@ export default {
     // Dafür einfach mounted: nach created: umbenannt.
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------
     console.log("In created() von myLayout.vue");
+    console.log(this.$emitter)
     //=================================================================================================================================================================
     // NEU: Client-seitiger Code für Registrierung eines Service Workers, um später Web Push Notifications zu verarbeiten (siehe internes Design für BIM.click)
     // Siehe auch die Kommentare dazu in
@@ -4816,8 +4817,7 @@ export default {
       "In created() von MyLayout.vue: Setting up listening for event openLeftDrawerEvent"
     );
     // VUE3
-    /*
-    this.$root.$on("openLeftDrawerEvent", () => {
+    this.$emitter.on("openLeftDrawerEvent", () => {
       // Keine Parameter am Event
       // ACHTUNG: Unbedingt $root notwendig, da Cross-Component Event (Bus)
       // Siehe https://medium.com/js-dojo/component-communication-in-vue-js-ca8b591d7efa
@@ -4827,7 +4827,6 @@ export default {
       this.hamburger = false; // NEU - sicherheitshalber
       this.left = true;
     });
-    */
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // NEU: Listen to Event "openRightDrawerEvent", um den rechten Drawer mit Parameter Kontexthilfe Id zu öffnen
     // Wurde zuerst nur testweise aufgerufen aus Datenaustausch.vue
@@ -4836,8 +4835,7 @@ export default {
       "In created() von myLayout.vue: Setting up listening for event openRightDrawerEvent(topicContextHelp)"
     );
     // VUE3
-    /*
-    this.$root.$on("openRightDrawerEvent", topicContextHelp => {
+    this.$emitter.on("openRightDrawerEvent", topicContextHelp => {
       // ACHTUNG: Unbedingt $root notwendig, da Cross-Component Event (Bus)
       // Siehe https://medium.com/js-dojo/component-communication-in-vue-js-ca8b591d7efa
       console.log(
@@ -4849,33 +4847,32 @@ export default {
       this.left = false; // Linken Drawer schließen, um Platz zu gewinnen für rechten Drawer
       this.right = true;
     });
-*/
+
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // NEU: Listen to Event "closeRightDrawerEvent", um den rechten Drawer zu schließen
     // Wird in baueinheiten.vue verwendet, um fachliche Hilfe zu schließen bei Auswahl bestimmter Knoten im Bauvorhabenbaum
     console.log(
       "In created() von myLayout.vue: Setting up listening for event closeRightDrawerEvent"
     );
-    /* VUE3
-    this.$root.$on("closeRightDrawerEvent", () => {
-      // ACHTUNG: Unbedingt $root notwendig, da Cross-Component Event (Bus)
+    // VUE3
+    this.$emitter.on("closeRightDrawerEvent", () => {
+      // ACHTUNG: Unbedingt $emitter notwendig, da Cross-Component Event (Bus)
       // Siehe https://medium.com/js-dojo/component-communication-in-vue-js-ca8b591d7efa
       console.log(
         "In created() von myLayout.vue: Event closeRightDrawerEvent empfangen. Schließe rechten Drawer."
       );
       this.right = false;
     });
-    */
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    // TODO: Experimenteller Code, wird aktuell nicht mehr gebraucht, stattdessen neuer Event this.$root.$on("showBedienungsHilfe", ref) unten
+    // TODO: Experimenteller Code, wird aktuell nicht mehr gebraucht, stattdessen neuer Event this.$emitter.$on("showBedienungsHilfe", ref) unten
     // NEU: Listen to Event "notifyTopicContextHelpEvent", um die Id der Kontexthilfe im rechten Drawer zu setzen. Setzt nur die ID, der Drawer selbst kann mit dem Button
     // rechts oben aufgerufen werden und zeigt dann die durch das letzte solche Event per Id gesetzte aktuelle Kontexthilfe an
     console.log(
       "In created() von MyLayout.vue: Setting up listening for event notifyTopicContextHelpEvent(topicContextHelp)"
     );
     /*
-    this.$root.$on("notifyTopicContextHelpEvent", topicContextHelp => {
-      // ACHTUNG: Unbedingt $root notwendig, da Cross-Component Event (Bus)
+    this.$emitter.$on("notifyTopicContextHelpEvent", topicContextHelp => {
+      // ACHTUNG: Unbedingt $emitter notwendig, da Cross-Component Event (Bus)
       // Siehe https://medium.com/js-dojo/component-communication-in-vue-js-ca8b591d7efa
       console.log(
         "In MyLayout: Event notifyTopicContextHelpEvent(topicContextHelp) empfangen. Aktualisiere ausgewähltes Kontexthilfethema."
@@ -4916,15 +4913,15 @@ export default {
     });
 */
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    // this.$root.$on("showBedienungsHilfeEvent", ref) unten
+    // this.$emitter.$on("showBedienungsHilfeEvent", ref) unten
     // NEU: Listen to Event "showBedienungsHilfe", um das per ref identifizierte Expansion Item in der Bedienungshilfe im rechten Drawer zu öffnen
     // TODO: Dabei unbedingtes Öffnen der Hilfe oder vorher Öffnen der Hilfe per Button rechts oben?
     console.log(
       "In created() von MyLayout.vue: Setting up listening for event showBedienungsHilfe(ref)"
     );
     /*
-    this.$root.$on("showBedienungsHilfeEvent", ref => {
-      // ACHTUNG: Unbedingt $root notwendig, da Cross-Component Event (Bus)
+    this.$emitter.$on("showBedienungsHilfeEvent", ref => {
+      // ACHTUNG: Unbedingt $emitter notwendig, da Cross-Component Event (Bus)
       // Siehe https://medium.com/js-dojo/component-communication-in-vue-js-ca8b591d7efa
       console.log(
         "In MyLayout: Event showBedienungsHilfe(ref) empfangen. Zeige das per ref identifizierte Kontexthilfethema mit show-Methode."
@@ -4974,15 +4971,15 @@ export default {
     });
     */
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    // this.$root.$on("showFachlicheHilfeEvent", ref) unten
+    // this.$emitter.$on("showFachlicheHilfeEvent", ref) unten
     // NEU: Listen to Event "showFachlicheHilfe", um das per ref identifizierte Expansion Item in der fachlichen Hilfe im rechten Drawer zu öffnen
     // NEU: Zweiter optionaler Parameter openRightDrawer (Boolean) - wenn true, wird der rechte Drawer geöffnet, sonst (auch wenn undefined) bleibt er, wie er ist
     console.log(
       "In created() von MyLayout.vue: Setting up listening for event showFachlicheHilfe(ref)"
     );
-    /* VUE3
-    this.$root.$on("showFachlicheHilfeEvent", (ref, openRightDrawer) => {
-      // ACHTUNG: Unbedingt $root notwendig, da Cross-Component Event (Bus)
+    // VUE3
+    this.$emitter.on("showFachlicheHilfeEvent", (ref, openRightDrawer) => {
+      // ACHTUNG: Unbedingt $emitter notwendig, da Cross-Component Event (Bus)
       // Siehe https://medium.com/js-dojo/component-communication-in-vue-js-ca8b591d7efa
       console.log(
         "In MyLayout: Event showfachlicheHilfe(ref, openRightDrawer) empfangen. Öffne rechten Drawer, wenn openRightDrawer 'true'. Zeige das per ref identifizierte Kontexthilfethema mit show-Methode."
@@ -5076,7 +5073,7 @@ export default {
         } // Sonst bleibt der Drawer unverändert (kann vom Benutzer geöffent oder geschlossen sein)
       } // Sonst bleibt der Drawer unverändert (kann vom Benutzer geöffent oder geschlossen sein)
     });
-    */
+
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // NEU - Backlog Item #113 : Anmelden nur auslösen, wenn keine eMail oder kein Token zu finden ist in localStorage:
     // UPDATE: Dies nur ausführen, wenn die aktuelle Route nicht /Kontobestaetigung/... oder /Kennwortresetanforderung/... oder /Kennwortreset ist
