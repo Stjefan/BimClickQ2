@@ -34,6 +34,7 @@ module.exports = configure(function (ctx) {
     css: [
       'app.scss'
     ],
+    // In BIM.cick v1/Quasar v1: css: ["app.styl"],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -163,7 +164,17 @@ module.exports = configure(function (ctx) {
             .test(/\.vmd$/)
             .use('vmd-loader')
               .loader('vmd-loader')
-      }
+      },
+      //--------------------------------------------------------------------------------------------------------------------------
+      // NEU: Disabling des Console Loggings auf Heroku (Production Frontend Server) aus Security-Gründen mittels uglifyOptions:
+      // HINWEIS: uglifyOptions muss an dieser Stelle stehen, bewirkte aber früher obigen Fehler auf Heroku, daher war es 
+      // temporär disabled. Dieser Fehler (siehe "Update Oktober 2020 oben") war ein Timing-Problem, das mittlerweile gefixt wurde.
+      // Damit kann das Disabling des Console Loggings aus Sicherheitsgründen normalerweise für Production auf Heroku normalerweise
+      // hier enabled bleiben - bei Debugging-Bedarf auf Heroku können die folgenden drei Zeilen hier auch temporär auskommentiert werden:
+      //---------------------------------------------------------------------------------------------------------------------------
+      uglifyOptions: {
+        compress: { drop_console: !ctx.dev } // Müsste äquivalent sein zu drop_console: true, da Build normalerweise nur auf Heroku läuft, wo !ctx.dev true ist
+      },
       
     },
 
@@ -184,6 +195,8 @@ module.exports = configure(function (ctx) {
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
+      // NEU: Deutsch als Quasar language aktiviert
+      lang: "de", // Quasar language
 
       // For special cases outside of where the auto-import strategy can have an impact
       // (like functional components as one of the examples),
@@ -191,9 +204,10 @@ module.exports = configure(function (ctx) {
       //
       // components: [],
       // directives: [],
+      directives: ["Ripple", "ClosePopup"],
 
       // Quasar plugins
-      plugins: ['Notify']
+      plugins: ['Notify', 'Loading']
     },
 
     // animations: 'all', // --- includes all animations
@@ -202,7 +216,7 @@ module.exports = configure(function (ctx) {
 
     // https://v2.quasar.dev/quasar-cli-webpack/developing-ssr/configuring-ssr
     ssr: {
-      pwa: false,
+      pwa: true,
 
       // manualStoreHydration: true,
       // manualPostHydrationTrigger: true,
@@ -231,6 +245,25 @@ module.exports = configure(function (ctx) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
 
+      //-------------------------------------------------------------------------------------------------------------------------------
+      // Potentieller Workaround gegen Refresh-Probleme mit Workbox im PWA-Mode, siehe #344 -
+      // nach Vorlage auf https://quasar.dev/quasar-cli/developing-pwa/configuring-pwa#reload-and-update-automatically:
+      // Siehe auch https://developers.google.com/web/tools/workbox/modules/workbox-core 
+      // Erfordert aber dennoch einmaligen, manuellen Browser Refresh! Siehe Medium-Artikel in #344 zur Begründung.
+      workboxOptions: {
+        skipWaiting: true,
+        clientsClaim: true
+        // Weitere Workarounds, die nicht zum Ziel führen, dass immer der aktuellste App Code/Content verwendet und angezeigt wird ohne Refresh:
+        // navigateFallback: false, // Diskussion auf https://github.com/quasarframework/quasar/issues/7043, bewirkt aber offenbar nichts
+        // exclude: [
+        //  /\.html$/
+        // ] // Nach https://github.com/quasarframework/quasar-cli/issues/206 - führt im Zusammenspiel mit den obigen Options skipWaiting, clientsClaim führt dies aber dazu,
+        //      dass selbst nach einem Browser Refresh nicht der aktuelle HTML-Content in der Doku angezeigt wird!
+      },
+      // useCredentials: true, // Nach https://quasar.dev/quasar-cli/developing-pwa/configuring-pwa#configuring-manifest-file - hat aber keine Auswirkung auf Refresh-Problem!
+      // Mit #391 temporär auf true gesetzt, half aber nicht, daher wieder disabled
+      //-------------------------------------------------------------------------------------------------------------------------------
+
       // for the custom service worker ONLY (/src-pwa/custom-service-worker.[js|ts])
       // if using workbox in InjectManifest mode
       
@@ -241,14 +274,16 @@ module.exports = configure(function (ctx) {
       
 
       manifest: {
-        name: `BimClickQ2`,
-        short_name: `BimClickQ2`,
-        description: `A Quasar Project`,
+        name: `BimClickV2`,
+        short_name: `BimClickV2`,
+        description: 'A Quasar Framework App for Building Information Modeling (BIM)',
         display: 'standalone',
-        orientation: 'portrait',
-        background_color: '#ffffff',
-        theme_color: '#027be3',
+        orientation: "any", // NEU: #378 - ALT: "portrait" - siehe https://developer.mozilla.org/en-US/docs/Web/Manifest/orientation
+        background_color: "#ffffff", // weiß - unklar, wo das zum Einsatz kommt
+        // theme_color: "#027be3", // ALT: blau - bestimmt offenbar obere Leiste auf Smartphone - sollte besser grau sein, seit das graue Theme möglich ist!
+        theme_color: "#e0e0e0", // NEU: grau - bestimmt offenbar obere Leiste auf Smartphone - sollte besser grau sein, seit das graue Theme möglich ist!
         icons: [
+          /*
           {
             src: 'icons/icon-128x128.png',
             sizes: '128x128',
@@ -273,6 +308,24 @@ module.exports = configure(function (ctx) {
             src: 'icons/icon-512x512.png',
             sizes: '512x512',
             type: 'image/png'
+          }
+          */
+         //------------------------------------------------------------------------------------------------
+          // NEU: Braun/grüne Icons:
+          {
+            src: "statics/icons/bim-click-lego-icon-braun-gruen-transparent-rund-mittlerer-schatten-austritt-128x128.png",
+            sizes: "128x128",
+            type: "image/png"
+          },
+          {
+            src: "statics/icons/bim-click-lego-icon-braun-gruen-transparent-rund-mittlerer-schatten-austritt-256x256.png",
+            sizes: "256x256",
+            type: "image/png"
+          },
+          {
+            src: "statics/icons/bim-click-lego-icon-braun-gruen-transparent-rund-mittlerer-schatten-austritt-512x512.png",
+            sizes: "512x512",
+            type: "image/png"
           }
         ]
       }

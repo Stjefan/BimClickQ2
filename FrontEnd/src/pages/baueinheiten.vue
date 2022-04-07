@@ -9042,10 +9042,12 @@
                       name="geschossProfilFormularTabBaueinheiten"
                       class="q-pa-xs full-width"
                     >
-                    <!--
+
                     <computedWithSideEffect/>
+                    <!--
                     VUE 3
                     -->
+                    <!--
                       <baueinheitGeschossBaueigenschaftsProfilFormular
                         profilBezeichnung="Baueinheit > Geschoss"
                         :nodes="nodesTreeBaueinheiten"
@@ -9057,6 +9059,7 @@
                           reloadTreeWrapper()
                         "
                       />
+                      -->
                     </q-tab-panel>
                     <!-- --------------------------------------------------------------------------------------------------------------------------------- -->
                     <!-- NEU: -->
