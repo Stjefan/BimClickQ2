@@ -216,7 +216,7 @@ module.exports = configure(function (ctx) {
 
     // https://v2.quasar.dev/quasar-cli-webpack/developing-ssr/configuring-ssr
     ssr: {
-      pwa: true,
+      pwa: false,
 
       // manualStoreHydration: true,
       // manualPostHydrationTrigger: true,
@@ -240,6 +240,7 @@ module.exports = configure(function (ctx) {
       ]
     },
 
+    /*
     // https://v2.quasar.dev/quasar-cli-webpack/developing-pwa/configuring-pwa
     pwa: {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
@@ -283,6 +284,7 @@ module.exports = configure(function (ctx) {
         // theme_color: "#027be3", // ALT: blau - bestimmt offenbar obere Leiste auf Smartphone - sollte besser grau sein, seit das graue Theme möglich ist!
         theme_color: "#e0e0e0", // NEU: grau - bestimmt offenbar obere Leiste auf Smartphone - sollte besser grau sein, seit das graue Theme möglich ist!
         icons: [
+          */
           /*
           {
             src: 'icons/icon-128x128.png',
@@ -310,6 +312,7 @@ module.exports = configure(function (ctx) {
             type: 'image/png'
           }
           */
+         /*
          //------------------------------------------------------------------------------------------------
           // NEU: Braun/grüne Icons:
           {
@@ -330,6 +333,7 @@ module.exports = configure(function (ctx) {
         ]
       }
     },
+    */
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-cordova-apps/configuring-cordova
     cordova: {
