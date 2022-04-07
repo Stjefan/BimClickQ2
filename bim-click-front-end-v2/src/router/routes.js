@@ -349,7 +349,7 @@ const routes = [
         path: "/Verwaltung", // URL-Pfad der Route
         // NEU:
         name: "Verwaltung", // Name der Route, nicht Name der Komponente!
-        component: () => import("../pages/Verwaltung.vue"), // Relativer Pfad, File Name der Komponente (kebab-case)!
+        component: () => import("../pages/verwaltung.vue"), // Relativer Pfad, File Name der Komponente (kebab-case)!
         beforeEnter: (to, from, next) => {
           console.log("In beforeEnter Route Guard von Route /Verwaltung");
           // console.log("from: ", from);
