@@ -361,7 +361,7 @@ module.exports = configure(function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'frontend'
+        appId: 'bim-click-front-end-v2'
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
@@ -370,9 +370,7 @@ module.exports = configure(function (ctx) {
         chain.plugin('eslint-webpack-plugin')
           .use(ESLintPlugin, [{ extensions: [ 'js' ] }])
       },
-      
 
-      
       chainWebpackPreload (chain) {
         chain.plugin('eslint-webpack-plugin')
           .use(ESLintPlugin, [{ extensions: [ 'js' ] }])
